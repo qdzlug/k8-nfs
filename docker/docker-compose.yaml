@@ -1,0 +1,23 @@
+---
+version: '3'
+services:
+  nfs:
+    image: erichough/nfs-server
+    volumes:
+      - /home/ubuntu/nfssrv/volumes/data:/nfs
+      - /home/ubuntu/nfssrv/volumes/exports.txt:/etc/exports:ro
+      - /lib/modules:/lib/modules:ro
+    cap_add:
+      - SYS_ADMIN
+      - SYS_MODULE
+    ports:
+      - 2049:2049  # NFS v3 / v4
+      - 2049:2049/udp  # NFS v3
+      - 111:111  # NFS v3
+      - 111:111/udp  # NFS v3
+      - 32765:32765   # NFS v3
+      - 32765:32765/udp  # NFS v3
+      - 32767:32767  # NFS v3
+      - 32767:32767/udp  # NFS v3
+    security_opt:
+      - apparmor=erichough-nfs
